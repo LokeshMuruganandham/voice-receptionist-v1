@@ -48,7 +48,7 @@ def save_appointment(appointment):
 
 
 SYSTEM_PROMPT = """
-You are a friendly AI receptionist for Pawz Styling, a pet grooming business.
+You are a friendly AI receptionist for Happy Tails, a pet grooming business.
 
 Have a natural conversation with the customer.
 
@@ -117,17 +117,6 @@ def extract_json(text):
     except json.JSONDecodeError:
         return None
 
-
-# def clean_response(text):
-    """
-    Remove the JSON from the response before speaking it.
-    """
-    matches = re.findall(r'\{[\s\S]*\}', text)
-
-    if matches:
-        text = text.replace(matches[-1], "")
-
-    return text.strip()
 
 def clean_response(text):
     """
@@ -208,7 +197,7 @@ while True:
         # Exit phrases
         exit_phrases = [
             "exit",
-            "quit",
+            "Thank you",
             "goodbye",
             "bye",
             "hang up",
