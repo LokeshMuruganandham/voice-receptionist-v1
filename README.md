@@ -60,46 +60,6 @@ For example, if a customer provides both their name and their pet's name in the 
 
 ---
 
-## Conversation Flow
-
-The general flow of the application is:
-
-```text
-Customer speaks
-       |
-       v
-Speech Recognition
-       |
-       v
-Text input
-       |
-       v
-Google Gemini
-       |
-       +----> Conversation understanding
-       |
-       +----> Appointment information extraction
-       |
-       v
-Assistant response
-       |
-       v
-Text-to-Speech
-       |
-       v
-Customer hears response
-       |
-       v
-Appointment completed
-       |
-       v
-Excel workbook
-```
-
-The application maintains the conversation history so that previously provided information can be used in subsequent interactions.
-
----
-
 ## Example Conversation
 
 ```text
@@ -142,7 +102,6 @@ After the required information is collected and the appointment is confirmed, th
 | PyAudio | Microphone/audio input |
 | pyttsx3 | Text-to-speech |
 | openpyxl | Excel file operations |
-| python-dotenv | Environment variable management |
 
 ---
 
@@ -150,8 +109,9 @@ After the required information is collected and the appointment is confirmed, th
 
 ```text
 voice-receptionist-v1/
-│
-├── .env
+├── assests
+        ├── architecture.png
+├── .env.example
 ├── .gitignore
 ├── appointments-v1.xlsx
 ├── receptionist-v1.py
@@ -175,7 +135,7 @@ voice-receptionist-v1/
 | `test-excel.py` | Tests writing appointment data to Excel |
 | `appointments-v1.xlsx` | Stores completed appointment records |
 | `requirements.txt` | Python dependency list |
-| `.env` | Stores environment variables such as the Gemini API key |
+| `.env.example` | Example template of environment variables such as the Gemini API key |
 | `.gitignore` | Prevents sensitive and unnecessary files from being committed |
 
 ---
@@ -239,8 +199,6 @@ GEMINI_API_KEY=your_api_key_here
 ```
 
 Replace `your_api_key_here` with your Gemini API key.
-
-Do not commit the `.env` file to GitHub.
 
 ### 5. Connect a microphone
 
