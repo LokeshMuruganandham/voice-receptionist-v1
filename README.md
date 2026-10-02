@@ -4,25 +4,26 @@ A Python-based voice AI receptionist prototype for a pet grooming business. The 
 
 ## Overview
 
-Voice Receptionist V1 is a voice-first appointment booking assistant developed for pet grooming business.
+Voice Receptionist V1 is a voice-first appointment booking assistant developed for a pet grooming business.
 
 Instead of requiring customers to provide all appointment information at once, the receptionist collects the required details conversationally, asking for missing information one question at a time.
 
 The system maintains the information collected during the conversation, uses Google Gemini to interpret the customer's responses, and extracts the appointment information into a structured format.
 
+The receptionist currently collects the following information:
+
+- customer_name
+- pet_name
+- breed
+- whatsapp
+- appointment_date
+- appointment_time
+
+The system is designed to collect these fields conversationally rather than asking for everything in a single question. For example, if a customer provides both their name and their pet's name in the same response, the assistant retains both pieces of information and continues by asking only for the remaining details.
+
 Once all required information has been collected and the appointment is confirmed, the booking is saved to an Excel workbook.
 
 This project is currently a local prototype and serves as the foundation for a more advanced AI receptionist system.
-
----
-
-## System Architecture
-
-The application follows a voice-to-AI-to-storage pipeline. The Python application manages the conversation, communicates with Google Gemini, processes appointment information, and stores confirmed appointments in an Excel workbook.
-
-<p align="center">
-  <img src="assets/architecture.png" alt="AI Voice Receptionist Architecture" width="900">
-</p>
 
 ## Features
 
@@ -39,26 +40,13 @@ The application follows a voice-to-AI-to-storage pipeline. The Python applicatio
 - Individual test scripts for Gemini, voice input/output, data extraction, and Excel operations
 - Environment variable support for API credentials
 
----
+## System Architecture
 
-## Appointment Information
+The application follows a voice-to-AI-to-storage pipeline. The Python application manages the conversation, communicates with Google Gemini, processes appointment information, and stores confirmed appointments in an Excel workbook.
 
-The receptionist currently collects the following information:
-
-| Field | Description |
-|---|---|
-| `customer_name` | Name of the customer |
-| `pet_name` | Name of the pet |
-| `breed` | Breed of the pet |
-| `whatsapp` | Customer's WhatsApp number |
-| `appointment_date` | Requested appointment date |
-| `appointment_time` | Requested appointment time |
-
-The receptionist is designed to collect these fields conversationally rather than asking for everything in a single question.
-
-For example, if a customer provides both their name and their pet's name in the same response, the system can retain both pieces of information and continue by asking only for the remaining details.
-
----
+<p align="center">
+  <img src="assets/architecture.png" alt="AI Voice Receptionist Architecture" width="900">
+</p>
 
 ## Example Conversation
 
@@ -90,8 +78,6 @@ AI: Thanks. I've got all the details. Let me confirm your
 
 After the required information is collected and the appointment is confirmed, the booking is written to the Excel workbook.
 
----
-
 ## Technology Stack
 
 | Technology | Purpose |
@@ -103,14 +89,12 @@ After the required information is collected and the appointment is confirmed, th
 | pyttsx3 | Text-to-speech |
 | openpyxl | Excel file operations |
 
----
-
 ## Project Structure
 
 ```text
 voice-receptionist-v1/
-├── assests
-        ├── architecture.png
+├── assets/
+│   └── architecture.png
 ├── .env.example
 ├── .gitignore
 ├── appointments-v1.xlsx
@@ -124,8 +108,6 @@ voice-receptionist-v1/
 └── LICENSE
 ```
 
-### File Descriptions
-
 | File | Purpose |
 |---|---|
 | `receptionist-v1.py` | Main voice receptionist application |
@@ -135,10 +117,9 @@ voice-receptionist-v1/
 | `test-excel.py` | Tests writing appointment data to Excel |
 | `appointments-v1.xlsx` | Stores completed appointment records |
 | `requirements.txt` | Python dependency list |
-| `.env.example` | Example template of environment variables such as the Gemini API key |
+| `.env.example` | Example template for environment variables such as the Gemini API key |
 | `.gitignore` | Prevents sensitive and unnecessary files from being committed |
-
----
+| `assets/architecture.png` | System architecture diagram |
 
 ## Requirements
 
@@ -154,8 +135,6 @@ pyaudio==0.2.14
 ```
 
 A working microphone is also required for voice interaction.
-
----
 
 ## Installation
 
@@ -210,70 +189,11 @@ Ensure that your system microphone is connected and available to Python.
 python receptionist-v1.py
 ```
 
----
+## Usage
 
-## Testing
+Run the receptionist in a normal terminal window and speak naturally into the microphone.
 
-The project includes separate scripts for testing individual components before running the complete application.
-
-### Test Gemini Connection
-
-```bash
-python test-gemini.py
-```
-
-This verifies that the Gemini API can be reached using the configured API key.
-
-### Test Data Extraction
-
-```bash
-python test-extraction.py
-```
-
-This tests the extraction of appointment information from conversational input into a structured format.
-
-### Test Text-to-Speech
-
-```bash
-python test-voice.py
-```
-
-This plays a sample response through the configured text-to-speech engine.
-
-### Test Excel Operations
-
-```bash
-python test-excel.py
-```
-
-This tests writing appointment information to `appointments-v1.xlsx`.
-
----
-
-## Data Storage
-
-Completed appointments are currently stored in:
-
-```text
-appointments-v1.xlsx
-```
-
-Each appointment contains:
-
-```text
-Customer Name
-Pet Name
-Breed
-WhatsApp
-Appointment Date
-Appointment Time
-```
-
-Excel is being used for this initial prototype to keep the system simple and easy to inspect.
-
-A database-based storage system would be more appropriate for a production deployment.
-
----
+The assistant will greet the customer, ask for the next missing detail, and continue until the booking is complete or the user exits.
 
 ## How It Works
 
@@ -319,7 +239,64 @@ When all required information has been collected, the receptionist confirms the 
 
 After confirmation, the completed appointment is written to the Excel workbook.
 
----
+## Testing
+
+The project includes separate scripts for testing individual components before running the complete application.
+
+### Test Gemini Connection
+
+```bash
+python test-gemini.py
+```
+
+This verifies that the Gemini API can be reached using the configured API key.
+
+### Test Data Extraction
+
+```bash
+python test-extraction.py
+```
+
+This tests the extraction of appointment information from conversational input into a structured format.
+
+### Test Text-to-Speech
+
+```bash
+python test-voice.py
+```
+
+This plays a sample response through the configured text-to-speech engine.
+
+### Test Excel Operations
+
+```bash
+python test-excel.py
+```
+
+This tests writing appointment information to `appointments-v1.xlsx`.
+
+## Data Storage
+
+Completed appointments are currently stored in:
+
+```text
+appointments-v1.xlsx
+```
+
+Each appointment contains:
+
+```text
+Customer Name
+Pet Name
+Breed
+WhatsApp
+Appointment Date
+Appointment Time
+```
+
+Excel is being used for this initial prototype to keep the system simple and easy to inspect.
+
+A database-based storage system would be more appropriate for a production deployment.
 
 ## Current Limitations
 
@@ -338,11 +315,7 @@ Current limitations include:
 - Conversation handling depends on the Gemini API
 - Requires an active internet connection for Gemini API requests
 
----
-
 ## License
 
 This project is currently not licensed for redistribution or reuse.
 The source code is available for viewing and demonstration purposes.
-
----
